@@ -2,22 +2,27 @@ import { Coursework } from "../models/courseworkSchema.js";
 import { handleValidationError } from "../middlewares/errorhandler.js";
 
 export const createCoursework = async (req, res, next) => {
-    console.log(req.body);
-    const { courseTitle, author} = req.body;
+  const { courseTitle, author } = req.body;
+  const fileUrl = req.file ? req.file.path : null;
 
-    try{
-        if ( !courseTitle || !author) {
-            handleValidationError ("Please fill full form", 400);
-        }
-        await Coursework.create ({courseTitle, author});
-            res.status(200).json({
-                success: true,
-                message: "New Coursework has been added"
-            });
-    }catch(err){
-        next(err);
+  try {
+    if (!courseTitle || !author || !fileUrl) {
+      handleValidationError("Please fill full form", 400);
     }
+
+    const newCoursework = await Coursework.create({ courseTitle, author, fileUrl });
+
+    res.status(200).json({
+      success: true,
+      coursework: newCoursework,
+      message: "New Coursework has been added"
+    });
+
+  } catch (err) {
+    next(err);
+  }
 };
+
 
 export const getAllCoursework = async (req, res, next) => {
     try {

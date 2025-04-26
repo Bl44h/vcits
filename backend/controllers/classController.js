@@ -9,7 +9,7 @@ export const createClass = async (req, res, next) => {
         if ( !classname) {
             handleValidationError ("Please fill full form", 400);
         }
-        await Student.create ({classname});
+        await Class.create ({classname});
             res.status(200).json({
                 success: true,
                 message: "Class Created"

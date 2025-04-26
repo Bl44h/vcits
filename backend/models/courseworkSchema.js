@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import multer from "multer";
 
 const courseworkSchema = new mongoose.Schema({
     courseTitle: {
@@ -11,6 +12,8 @@ const courseworkSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    fileUrl: {
+        type: String}
     
 })
 

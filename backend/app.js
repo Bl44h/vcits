@@ -14,7 +14,9 @@ import announcementRouter from "./routers/announcementRouter.js";
 
 
 import { errorHandler } from "./middlewares/errorhandler.js";
+import { upload } from "./middlewares/uploadMiddleware.js";
 
+import dashboardRoutes from "./routers/dashboardRouter.js";
 
 const app = express();
 config({path: "./config/config.env"});
@@ -33,6 +35,7 @@ app.use((err, req, res, next) => {
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use('/uploads', express.static('uploads'));
 
 app.use("/api/v1/students", studentRouter);
 app.use("/api/v1/lecturers", lecturerRouter);
@@ -42,6 +45,8 @@ app.use("/api/v1/attendance", attendanceRouter);
 app.use("/api/v1/assignments", assignmentRouter);
 app.use("/api/v1/assessments", assessmentRouter);
 app.use("/api/v1/announcements", announcementRouter);
+
+app.use("/api/v1/dashboard", dashboardRoutes);
 
 dbConnection();
 
