@@ -13,12 +13,17 @@ import {
 } from '../../styles/ExamStyles'
 
 const CheckAssessmentSection = () => {
+
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     return (
         <ExamContainer>
-            <SidebarContainer>
-                <Sidebar/>
-            </SidebarContainer>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <ExamHeader>Assessment Details</ExamHeader>
                 <ExamForm>
                     <FormLabel>Name:</FormLabel>

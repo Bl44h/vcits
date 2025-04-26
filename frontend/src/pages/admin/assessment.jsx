@@ -13,6 +13,13 @@ import {
 } from '../../styles/ExamStyles'
 
 const Assessment = () => {
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     const [assessmentData, setAssessmentData] = useState([]);
     const [name, setName] = useState('');
     const [matricNumber, setMatricNumber] = useState('');
@@ -69,9 +76,10 @@ const Assessment = () => {
         
         <ExamContainer>
             <SidebarContainer>
-                <Sidebar/>
+                <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            
             </SidebarContainer>
-            <Content>
+            <Content isOpen={isOpen}>
                 <ExamHeader>Exam Details</ExamHeader>
                 <ExamForm>
                     <FormLabel>Name:</FormLabel>
@@ -94,7 +102,7 @@ const Assessment = () => {
                         type="number"
                         required
                     />
-                    <AddButton type="submit">Add Exam</AddButton>
+                    <AddButton type="submit">Add Assessment</AddButton>
                 </ExamForm>
 
                 <h2>Total Marks:</h2>

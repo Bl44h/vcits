@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect, useState } from "react";
 import Sidebar from './sidebar';
 import axios from 'axios'
@@ -14,6 +16,12 @@ import {
 } from '../../styles/StudentsStyles'
 
 const Students = () => {
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
     const [newStudent, setNewStudent] = useState({ name: '', matricNumber: '', grade: '' });
       const [students, setStudents] = useState([]);
@@ -32,44 +40,50 @@ const Students = () => {
       };
     
       const handleAddStudent = async (e) => {
-        e.preventDefault();
-        if (newStudent.name.trim() !== '' && newStudent.matricNumber.trim() !== '' && newStudent.grade.trim() !== '') {
-          try {
-            const response = await axios.post('http://localhost:4000/api/v1/students', newStudent);
-            setStudents([...students, response.data.student]);
-            setNewStudent({ name: '', matricNumber: '', grade: '' });
-          } catch (error) {
-            console.error('Error adding student:', error);
-          }
-        }
-      };
+  e.preventDefault();
+  if (newStudent.name.trim() !== '' && newStudent.matricNumber.trim() !== '' && newStudent.grade.trim() !== '') {
+    try {
+      await axios.post('http://localhost:4000/api/v1/students', newStudent);
+      toast.success('✅ Student added successfully!');
+      setNewStudent({ name: '', matricNumber: '', grade: '' });
+      fetchStudents();  // 💡 Refresh the list from the server
+    } catch (error) {
+      console.error('Error adding student:', error);
+      toast.error('❌ Failed to add student');
+    }
+  } else {
+    toast.error('❌ Please fill out all fields');
+  }
+};
+
 
     return (
         <StudentsContainer>
-            <Sidebar />
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <StudentsContent>
                     <StudentsHeader>Students</StudentsHeader>
                         <AddStudentForm onSubmit={handleAddStudent}>
                             <AddStudentInput 
-                                typeof="Text"
+                                type="Text"
                                 placeholder="Enter Student Name"
                                 value={newStudent.name}
                                 onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
                             />
                             <AddStudentInput 
-                                typeof="Text"
+                                type="Text"
                                 placeholder="Enter Matric Number"
                                 value={newStudent.matricNumber}
                                 onChange={(e) => setNewStudent({ ...newStudent, matricNumber: e.target.value })}
                             />
                             <AddStudentInput 
-                                typeof="Text"
+                                type="Text"
                                 placeholder="Enter ......"
                                 value={newStudent.grade}
                                 onChange={(e) => setNewStudent({ ...newStudent, grade: e.target.value })}
                             />
-                            <AddStudentButton type="sumit">Add Student</AddStudentButton>
+                            <AddStudentButton type="submit">Add Student</AddStudentButton>
+
                         </AddStudentForm>
                         
                         <StudentList>
@@ -80,6 +94,13 @@ const Students = () => {
 
                 </StudentsContent>
             </Content>
+            <ToastContainer 
+                position="top-center" 
+                autoClose={3000} 
+                hideProgressBar={false} 
+                newestOnTop={false}
+              />
+
         </StudentsContainer>
     )
 };

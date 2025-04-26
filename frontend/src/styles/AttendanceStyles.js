@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const AttendanceContainer = styled.div`
   display: flex;
   padding-left: 240px;
-  margin-left: 230px
+  
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
@@ -14,7 +14,10 @@ export const AttendanceContainer = styled.div`
 
 export const Content = styled.div`
   flex: 1;
+  padding: 20px;
   font-family: montserrat;
+  margin-left: ${({ isOpen }) => (isOpen ? '230px' : '50px')};
+  transition: margin-left 0.3s ease;
 `;
 
 export const AttendanceContent = styled.div`

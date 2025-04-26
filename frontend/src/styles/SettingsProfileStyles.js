@@ -13,6 +13,8 @@ export const Content = styled.div`
   flex: 1;
   padding: 20px;
   font-family: montserrat;
+  margin-left: ${({ isOpen }) => (isOpen ? '230px' : '50px')};
+  transition: margin-left 0.3s ease;
 `;
 
 export const ProfileHeader = styled.h1`

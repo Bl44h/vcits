@@ -12,6 +12,12 @@ import{
 
 const Performance = () => {
 
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     const schoolPerformanceData = {
         averageScore: 30,
         totalStudents: 100,
@@ -25,8 +31,8 @@ const Performance = () => {
 
     return (
         <PerformanceContainer>
-            <Sidebar/>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <PerformanceContent>
                     <PerformanceHeader>School Performance</PerformanceHeader>
                     <SchoolPerformance>

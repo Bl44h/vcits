@@ -13,10 +13,17 @@ import {
 } from '../../styles/DashboardStyles'
 
 const TeacherDashboard = () => {
+
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+  
     return (
         <TeacherDashboardContainer>
-            <Sidebar/>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <Section>
                     <SectionTitle>Overview</SectionTitle>
                     <CardContainer>

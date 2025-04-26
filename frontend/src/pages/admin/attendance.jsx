@@ -16,6 +16,12 @@ import{
 
 const Attendance = () => {
 
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     
       const [students, setStudents] = useState([]);
       const [attendanceData, setAttendanceData] = useState([]);
@@ -66,8 +72,8 @@ const Attendance = () => {
 
     return (
         <AttendanceContainer>
-            <Sidebar/>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <AttendanceContent>
                     <AttendanceHeader>Attendance</AttendanceHeader>
                     <AttendanceList>

@@ -14,15 +14,40 @@ import {
 } from '../../styles/StudentsStyles'
 
 const StudentSection = () => {
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+    const [students, setStudents] = useState([]);
+    
+      useEffect(() => {
+        fetchStudents();
+      }, []);
+    
+      const fetchStudents = async () => {
+        try {
+          const response = await axios.get('http://localhost:4000/api/v1/students/getall');
+          setStudents(response.data.students);
+        } catch (error) {
+          console.error('Error fetching students:', error);
+        }
+      };
+    
+
     return (
         <StudentsContainer>
-            <Sidebar/>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <StudentsContent>
                     <StudentsHeader>Students</StudentsHeader>
                     <StudentList>
-                        
-                    </StudentList>
+                            {students.map((student) => (
+                                          <StudentItem key={student.id}>{student.name} - {student.matricNumber} - {student.grade}</StudentItem>
+                                        ))}
+                       </StudentList>
                 </StudentsContent>
             </Content>
         </StudentsContainer>

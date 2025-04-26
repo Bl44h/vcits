@@ -14,6 +14,12 @@ import {
 
 const AttendanceSection = () => {
 
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     const attendance = [
         {id:1, date: '2025-01-01', present: true},
         {id:2, date: '2025-01-01', present: true},
@@ -24,10 +30,8 @@ const AttendanceSection = () => {
 
     return (
         <AttendanceContainer>
-            <SidebarContainer>
-                <Sidebar/>
-            </SidebarContainer>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <AttendanceHeader>Attendance</AttendanceHeader>
                 <AttendanceList>
                     {attendance.map(({id,date,present}) => (

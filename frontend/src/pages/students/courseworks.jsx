@@ -13,12 +13,17 @@ import {
 } from '../../styles/LibraryStyles';
 
 const CourseworksSection = () => {
+
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+  
     return (
         <LibraryContainer>
-            <SidebarContainer>
-                <Sidebar/>
-            </SidebarContainer>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <LibraryHeader>Courseworks</LibraryHeader>
                 <BookList>
                     

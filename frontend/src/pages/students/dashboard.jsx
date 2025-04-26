@@ -16,10 +16,16 @@ import {
 
 
 const StudentDashboard = () => {
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+  
     return (
         <StudentDashboardContainer>
-            <Sidebar />
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                     <Section>
                         <SectionTitle>Overview</SectionTitle>
                         <CardContainer>

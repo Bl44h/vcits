@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect, useState } from "react";
 import Sidebar from './sidebar';
 import axios from 'axios'
@@ -17,6 +19,12 @@ import {
 }from '../../styles/AnnouncementStyles'
 
 const Announcements = () => {
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
     
       // State for managing announcement
       const [announcement, setAnnouncement] = useState('');
@@ -59,10 +67,10 @@ const Announcements = () => {
     
     return (
         <AnnouncementContainer>
-            <Sidebar/>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <Title>Announcement</Title>
-                <AnnouncementForm>
+                <AnnouncementForm onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label htmlFor="announcement">Announcement</Label>
                         <TextArea
@@ -86,6 +94,12 @@ const Announcements = () => {
                         ))}
                 </AnnouncementList>
             </Content>
+                <ToastContainer 
+                  position="top-center" 
+                  autoClose={3000} 
+                  hideProgressBar={false} 
+                  newestOnTop={false}
+                /> 
         </AnnouncementContainer>
     )
 };

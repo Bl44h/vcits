@@ -13,6 +13,8 @@ import {BsGraphUp,
     BsBookHalf,
     BsQuestionSquare
 } from 'react-icons/bs'
+import bg1 from '../../assets/VCITS2.png';
+
 
 const SidebarContainer = styled.div`
   position: fixed;
@@ -74,8 +76,10 @@ const SidebarIcon = styled(Link)`
 `;
 
 const Logo = styled.img`
-  width: 50px;
+  
   height: auto;
+  width: ${({ isOpen }) => (isOpen ? '50px' : '25px')};
+
 `;
 
 const ToggleButton = styled.div`
@@ -100,15 +104,12 @@ const ToggleIcon = styled.span`
 `;
 
 
-const Sidebar = () => {
-    const [isOpen, setIsOpen] = useState(true);
-    const toggleSidebar = () => {
-        setIsOpen(!isOpen);
-    }
+
+const Sidebar = ({ isOpen, toggleSidebar }) => {
     return (
         <SidebarContainer style = {{width: isOpen ? '230px' : '50px'}}>
             <SidebarHeader>
-                <Logo src = '' alt= 'Logo' />
+                <Logo src = {bg1} alt= 'Logo' isOpen={isOpen} />
             </SidebarHeader>
             <SidebarNav>
                 <SidebarNavItem>
@@ -117,7 +118,7 @@ const Sidebar = () => {
                 </SidebarNavItem>
                 <SidebarNavItem>
                     <SidebarIcon to=  "/admin/classes"> <BsPeople/> </SidebarIcon>
-                    <StyledLink to=  "/admin/classes" isOpen={isOpen} > Classes </StyledLink>
+                    <StyledLink to=  "/admin/classes" isOpen={isOpen} > Courses </StyledLink>
                 </SidebarNavItem>
                 <SidebarNavItem>
                     <SidebarIcon to=  "/admin/students" > <BsPerson /> </SidebarIcon>
@@ -127,10 +128,12 @@ const Sidebar = () => {
                     <SidebarIcon to=  "/admin/lecturers" > <BsPerson/> </SidebarIcon>
                     <StyledLink to=  "/admin/lecturers" isOpen={isOpen} > Lecturers </StyledLink>
                 </SidebarNavItem>
+               {/*
                 <SidebarNavItem>
                     <SidebarIcon to=  "/admin/assignments" > <BsFileText /> </SidebarIcon>
                     <StyledLink to=  "/admin/assignments" isOpen={isOpen} > Assignments </StyledLink>
                 </SidebarNavItem>
+                */}
                 <SidebarNavItem>
                     <SidebarIcon to=  "/admin/assessment" > <BsBook /> </SidebarIcon>
                     <StyledLink to=  "/admin/assessment" isOpen={isOpen} > Assessments </StyledLink>
@@ -139,10 +142,12 @@ const Sidebar = () => {
                     <SidebarIcon to=  "/admin/performance" > <BsGraphDown /> </SidebarIcon>
                     <StyledLink to=  "/admin/performance" isOpen={isOpen} > Performance </StyledLink>
                 </SidebarNavItem>
+                {/*
                 <SidebarNavItem>
                     <SidebarIcon to=  "/admin/attendance" > <BsCalendar /> </SidebarIcon>
                     <StyledLink to=  "/admin/attendance" isOpen={isOpen} > Attendance </StyledLink>
                 </SidebarNavItem>
+                */}
                 <SidebarNavItem>
                     <SidebarIcon to=  "/admin/materials"> <BsBookHalf /> </SidebarIcon>
                     <StyledLink to=  "/admin/materials" isOpen={isOpen} > Course Materials </StyledLink>

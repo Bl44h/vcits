@@ -43,6 +43,7 @@ import CheckAnnouncementSection from "./pages/teachers/announcement"
 import CheckPerformanceSection from "./pages/teachers/performance"
 import TeacherSection from "./pages/teachers/lecturers"
 import TeacherProfileSection from "./pages/teachers/profile"
+import MaterialSection from "./pages/teachers/materials";
 //import Sidebar from "./pages/teachers/sidebar"
 
 import { GlobalStyles } from './styles/styles';
@@ -102,6 +103,8 @@ function App() {
       <Route exact path= '/teachers/profile' element = {<TeacherProfileSection/>} />
       <Route exact path= '/teachers/students' element = {<StudentSection/>} /> 
       <Route exact path= '/teachers/lecturers' element = {<TeacherSection/>} />                                             
+      <Route exact path= '/teachers/materials' element = {<MaterialSection/>} />                                             
+
 
       </Routes>
       </Router>  

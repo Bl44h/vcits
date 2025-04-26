@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect, useState } from "react";
 import Sidebar from './sidebar';
 import axios from 'axios'
@@ -15,7 +17,14 @@ import {
 } from '../../styles/TeachersStyles'
 
 
+
 const Lecturers = () => {
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
     const [newLecturer, setNewLecturer] = useState({ name: '', email: '', course: '' });
       const [lecturers, setLecturers] = useState([]);
@@ -27,7 +36,7 @@ const Lecturers = () => {
       const fetchLecturers = async () => {
         try {
           const response = await axios.get('http://localhost:4000/api/v1/lecturers/getall');
-          setLecturers(response.data.teachers);
+          setLecturers(response.data.lecturers);
         } catch (error) {
           console.error('Error fetching lecturers:', error);
         }
@@ -37,20 +46,24 @@ const Lecturers = () => {
         e.preventDefault();
         if (newLecturer.name.trim() !== '' && newLecturer.email.trim() !== '' && newLecturer.course.trim() !== '') {
           try {
-            const response = await axios.post('http://localhost:4000/api/v1/lecturers', newLecturer);
-            const createdLecturer = response.data.lecturer;
-            setLecturers([...lecturers, createdLecturer]);
+            await axios.post('http://localhost:4000/api/v1/lecturers', newLecturer);
+            toast.success('✅ Lecturer added successfully!');
             setNewLecturer({ name: '', email: '', course: '' });
+            fetchLecturers();  // 💡 Fetch updated list from the server
           } catch (error) {
             console.error('Error adding lecturer:', error);
+            toast.error('❌ Error adding lecturer');
           }
+        } else {
+          toast.error('❌ All fields are required');
         }
       };
+      
     
     return (
         <TeachersContainer>
-            <Sidebar />
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <TeachersContent>
                     <TeachersHeader>Lecturers</TeachersHeader>
                         <AddTeacherForm onSubmit={handleAddLecturer}>
@@ -82,6 +95,12 @@ const Lecturers = () => {
                         </TeacherList>
                 </TeachersContent>
             </Content>
+            <ToastContainer 
+                  position="top-center" 
+                  autoClose={3000} 
+                  hideProgressBar={false} 
+                  newestOnTop={false}
+                />
         </TeachersContainer>
     )
 };

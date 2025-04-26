@@ -13,6 +13,13 @@ import{
 } from '../../styles/SettingsProfileStyles'
 
 const TeacherProfileSection = () => {
+
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     const teacherInfo = {
         name: 'Tunde Oyewo',
         email: 'tundeoyewo@gmail.com',
@@ -23,10 +30,8 @@ const TeacherProfileSection = () => {
 
     return (
         <ProfileContainer>
-            <SidebarContainer>
-                <Sidebar/>
-            </SidebarContainer>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <ProfileHeader>Profile Details</ProfileHeader>
                 <ProfileDetails>
                     <ProfileLabel>Name:</ProfileLabel>

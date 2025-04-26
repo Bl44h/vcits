@@ -18,7 +18,7 @@ import {Navbar,
 } from '../styles/styles';
 
 import bg from '../../src/assets/paper background.jpg';
-import bg1 from '../../src/assets/VCITS.png';
+import bg1 from '../../src/assets/VCITS2.png';
 import {Link, useNavigate} from 'react-router-dom';
 
 

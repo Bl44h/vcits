@@ -15,10 +15,17 @@ import{
 } from '../../styles/AttendanceStyles'
 
 const CheckAttendanceSection = () => {
+
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     return (
         <AttendanceContainer>
-            <Sidebar/>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <AttendanceContent>
                     <AttendanceHeader>Attendance</AttendanceHeader>
                     <AttendanceList>

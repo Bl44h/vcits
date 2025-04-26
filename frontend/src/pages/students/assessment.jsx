@@ -15,6 +15,13 @@ import {
 import { useRef } from 'react';
 
 const AssessmentSection = () => {
+
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     const chartRef = useRef(null);
 
     // Sample exam results data
@@ -51,10 +58,8 @@ const AssessmentSection = () => {
 
     return (
         <ExamContainer>
-            <SidebarContainer>
-                <Sidebar/>
-            </SidebarContainer>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <ExamHeader>Assessment Results</ExamHeader>
                 {/* <ExamResultsContainer>
                     {examResultsData.courses.map((course, index) => (

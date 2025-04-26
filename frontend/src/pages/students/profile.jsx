@@ -14,6 +14,12 @@ import {
 
 const ProfileSection = () => {
 
+    const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     const studentProfile = {
         name: 'Tunde Oyewo',
         email: 'tundeoyewo@gmail.com',
@@ -24,10 +30,8 @@ const ProfileSection = () => {
 
     return (
         <ProfileContainer>
-            <SidebarContainer>
-                <Sidebar/>
-            </SidebarContainer>
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <ProfileHeader>Profile</ProfileHeader>
                 <ProfileInfo>
                     <ProfileDetail>

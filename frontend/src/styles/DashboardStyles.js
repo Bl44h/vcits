@@ -69,12 +69,12 @@ export const CardContent = styled.p`
 
 export const StudentDashboardContainer = styled.div`
   display: flex;
-  padding-left: 240px;
+  
 `;
 
 
 export const TeacherDashboardContainer = styled.div`
   display: flex;
-  padding-left: 240px;
+  
 `;
 

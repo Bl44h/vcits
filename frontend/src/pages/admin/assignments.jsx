@@ -1,8 +1,9 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect, useState } from "react";
 import Sidebar from './sidebar';
 import axios from 'axios'
-//import { ToastContainer, toast } from 'react-toastify';
-//import 'react-toastify/dist/ReactToastify.css';
+
 
 import {
     AssignmentsContainer,
@@ -19,6 +20,12 @@ import {
 } from '../../styles/AssignmentsStyles'
 
 const Assignments = () => {
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   const [newAssignment, setNewAssignment] = useState({ title: '', description: '', grade: '', deadline: '' });
   const [assignments, setAssignments] = useState([]);
@@ -40,25 +47,24 @@ const Assignments = () => {
     e.preventDefault();
     if (newAssignment.title.trim() !== '' && newAssignment.description.trim() !== '' && newAssignment.grade.trim() !== '' && newAssignment.deadline.trim() !== '') {
       try {
-        const response = await axios.post('http://localhost:4000/api/v1/assignments', newAssignment);
-        // Display success toast message
-        toast.success('Assignment added successfully');
-        // Add the new assignment to the list
-        setAssignments([...assignments, response.data.assignment]);
-        // Clear the form
+        await axios.post('http://localhost:4000/api/v1/assignments', newAssignment);
+        toast.success('✅ Assignment added successfully!');
         setNewAssignment({ title: '', description: '', grade: '', deadline: '' });
+        fetchAssignments();  // Fetch fresh list from the server
       } catch (error) {
         console.error('Error adding assignment:', error);
-        // Display error toast message
-        toast.error('Error adding assignment');
+        toast.error('❌ Failed to add assignment');
       }
+    } else {
+      toast.error('❌ All fields must be filled');
     }
   };
+  
 
     return (
         <AssignmentsContainer>
-            <Sidebar />
-            <Content>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Content isOpen={isOpen}>
                 <AssignmentsContent>
                     <AssignmentsHeader>Assignments</AssignmentsHeader>
                     <AddAssignmentForm onSubmit={handleAddAssignment}>
@@ -96,11 +102,17 @@ const Assignments = () => {
                                 {assignment.description}, {assignment.grade}, {assignment.deadline}
                 </AssignmentItem>
                 ))}
-
+ 
                     </AssignmentList>
 
                 </AssignmentsContent>
             </Content>
+            <ToastContainer 
+                  position="top-center" 
+                  autoClose={3000} 
+                  hideProgressBar={false} 
+                  newestOnTop={false}
+                />
         </AssignmentsContainer>
     )
 };

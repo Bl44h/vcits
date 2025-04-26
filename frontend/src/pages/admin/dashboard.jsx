@@ -30,6 +30,29 @@ const AdminDashboard = () => {
     fetchStudentPerformance();
   }, []);
 
+  const [stats, setStats] = useState({
+    totalStudents: 0,
+    totalClasses: 0,
+    totalLecturers: 0,
+    newStudentsThisWeek: 0
+  });
+  
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/v1/dashboard/stats');
+        if (response.data.success) {
+          setStats(response.data.stats);
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard stats:", error);
+      }
+    };
+  
+    fetchStats();
+  }, []);
+  
+
   const fetchAnnouncements = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/v1/announcements/getall');
@@ -52,7 +75,7 @@ const AdminDashboard = () => {
 
     return (
         <AdminDashboardContainer >
-            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
             <Content isOpen={isOpen}>
                 <TopContent>
                     <Section>
@@ -60,15 +83,15 @@ const AdminDashboard = () => {
                         <CardContainer>
                             <Card>
                                 <CardTitle>Total Students</CardTitle>
-                                <CardContent>120</CardContent>
+                                <CardContent>{stats.totalStudents}</CardContent>
                             </Card>
                             <Card>
-                                <CardTitle>Total Classes</CardTitle>
-                                <CardContent>10</CardContent>
+                                <CardTitle>Total Courses</CardTitle>
+                                <CardContent>{stats.totalClasses}</CardContent>
                             </Card>
                             <Card>
                                 <CardTitle>Total Lecturers</CardTitle>
-                                <CardContent>120</CardContent>
+                                <CardContent>{stats.totalLecturers}</CardContent>
                             </Card>
                         </CardContainer>
                     </Section>

@@ -6,13 +6,15 @@ export const ExamContainer = styled.div`
 `;
 
 export const SidebarContainer = styled.div`
-  flex: 0 0 250px;
+  flex: 0 0 ;
 `;
 
 export const Content = styled.div`
   flex: 1;
   padding: 20px;
   font-family: montserrat;
+  margin-left: ${({ isOpen }) => (isOpen ? '230px' : '50px')};
+  transition: margin-left 0.3s ease;
 `;
 
 export const ExamHeader = styled.h1`

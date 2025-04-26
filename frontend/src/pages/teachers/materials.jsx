@@ -79,7 +79,7 @@ const [file, setFile] = useState(null);
               'Content-Type': 'multipart/form-data',
             },
           });
-          setMaterials([...materials, response.data.materials]);
+          setMaterials([...materials, response.data.coursework]);
           setNewMaterial({ title: '', author: '' });
           setFile(null);
         } catch (error) {
